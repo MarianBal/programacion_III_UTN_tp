@@ -4,16 +4,22 @@
        Students only need to change this block for their team.
        ═══════════════════════════════════════════════════════════════ */
     :root {
-      /* ── Team palette (default: Generic) ── */
-      --team-primary:     #455A64;   /* main brand color            */
-      --team-secondary:   #607D8B;   /* contrast / secondary color  */
-      --team-accent:      #90A4AE;   /* darker shade, buttons, etc. */
-      --team-dark:        #263238;   /* darkest shade, gradients    */
-      --team-text-light:  #FFFFFF;   /* text on primary background  */
-      --team-text-dark:   #212121;   /* text on light background    */
-      --team-primary-contrast: #FFFFFF; /* auto-calculated at runtime */
-      --team-accent-contrast:  #212121; /* auto-calculated at runtime */
-      --team-highlight:   rgba(69,90,100,0.12); /* subtle tint      */
+      /* — Team palette (Czech Republic) — */
+
+        --team-primary: #11457E;        /* azul bandera */
+        --team-secondary: #D7141A;      /* rojo bandera */
+
+        --team-accent: #0B2E59;         /* azul oscuro profundo */
+        --team-dark: #081626;           /* fondo muy oscuro */
+
+        --team-text-light: #FFFFFF;
+        --team-text-dark: #111827;
+
+        --team-primary-contrast: #FFFFFF;
+        --team-accent-contrast: #FFFFFF;
+
+        --team-highlight: rgba(17,69,126,0.18);
+
 
       /* ── App layout constants (do not touch) ── */
       --sidebar-width:       260px;
