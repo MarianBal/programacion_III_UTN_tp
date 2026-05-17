@@ -49,16 +49,16 @@ Entre sus responsabilidades se incluyen:
 
 | # | Integrante | Funcionalidad | Sección |
 |---|-----------|---------------|---------|
-| 1 | | Cuerpo Técnico y Estrategia | Mi Equipo |
-| 2 | | Rivales Históricos | Mi Equipo |
-| 3 | | Fase de Grupos | El Mundial |
-| 4 | | Camino del Equipo | El Mundial |
-| 5 | | Detalles de Partidos | El Mundial |
-| 6 | | Estadísticas y Premios | El Mundial |
-| 7 | | Historial de Mundiales | El Mundial |
-| 8 | | Eventos en Vivo | La Final |
-| 9 | | Estado del Equipo en la Final | La Final |
-| 10 | | **Jugar la Final** *(Responsabilidad Grupal)* | La Final |
+| 1 | Carolina Alvarez| Cuerpo Técnico y Estrategia | Mi Equipo |
+| 2 | Luisana Lanzos| Rivales Históricos | Mi Equipo |
+| 3 | Fernandez Lucas| Fase de Grupos | El Mundial |
+| 4 | Raul Benshimol| Camino del Equipo | El Mundial |
+| 5 | Matias Raffo| Detalles de Partidos | El Mundial |
+| 6 | Ignacio Colombo| Estadísticas y Premios | El Mundial |
+| 7 | Nicolás Moraez| Historial de Mundiales | El Mundial |
+| 8 | Santiago Fuentes | Eventos en Vivo | La Final |
+| 9 | Martín Cumpe| Estado del Equipo en la Final | La Final |
+| 10 | Mariana Bálsamo| **Jugar la Final** *(Responsabilidad Grupal)* | La Final |
 
 > **Jugar la Final** es obligatoria para la aprobación del TP y responsabilidad de todo el grupo. Debe poder jugarse de principio a fin sin errores. De ella dependen: Eventos en Vivo, Estado del Equipo, Estadísticas y Premios e Historial de Mundiales.
 
