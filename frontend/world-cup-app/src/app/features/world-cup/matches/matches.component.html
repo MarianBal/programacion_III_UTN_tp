@@ -1,6 +1,164 @@
 <section class="card">
   <div class="card-header">
     <span class="card-title">Partidos</span>
+    <span class="badge badge-primary">{{ pageState.playedMatches }}/{{ pageState.totalMatches }} jugados</span>
   </div>
-  <p>Este componente debe ser desarrollado por el alumno.</p>
+
+  <div class="stage-tabs mt-16" *ngIf="!pageState.loading && pageState.stages.length > 0">
+    <button
+      type="button"
+      class="stage-tab"
+      *ngFor="let stage of pageState.stages"
+      [class.active]="stage.stage === pageState.selectedStage"
+      (click)="onStageChange(stage.stage)">
+      {{ stage.label }} ({{ stage.count }})
+    </button>
+  </div>
+
+  <div class="info-bar mt-16" *ngIf="!pageState.loading && !pageState.errorMessage">
+    <span>{{ pageState.totalMatches }} partidos</span>
+    <span class="info-separator">-</span>
+    <span>{{ pageState.playedMatches }} finalizados</span>
+    <span class="info-separator">-</span>
+    <span>{{ pageState.pendingMatches }} pendientes</span>
+  </div>
+
+  <div class="empty-state" *ngIf="pageState.loading">
+    <div class="empty-icon">...</div>
+    <p>Cargando partidos...</p>
+  </div>
+
+  <div class="empty-state" *ngIf="!pageState.loading && pageState.errorMessage">
+    <div class="empty-icon">!</div>
+    <p>{{ pageState.errorMessage }}</p>
+  </div>
+
+  <div class="matches-layout mt-16" *ngIf="!pageState.loading && !pageState.errorMessage && pageState.matches.length > 0">
+    <section class="match-grid match-list" aria-label="Listado de partidos">
+      <button
+        type="button"
+        class="match-card match-select-card"
+        *ngFor="let match of pageState.matches"
+        [class.active]="match.matchCode === pageState.selectedMatchCode"
+        (click)="onMatchSelect(match)">
+        <div class="match-card-top">
+          <span class="match-code-lbl">{{ match.stageLabel }} · {{ match.matchCode }}</span>
+          <span class="match-res-lbl">{{ match.resolutionLabel }}</span>
+        </div>
+
+        <div class="match-teams-row">
+          <div class="match-team-info">
+            <span class="team-code">{{ match.homeFlag }}</span>
+            <span>{{ match.homeTeamName }}</span>
+          </div>
+          <div class="match-score-big">{{ match.scoreLabel }}</div>
+          <div class="match-team-info">
+            <span class="team-code">{{ match.awayFlag }}</span>
+            <span>{{ match.awayTeamName }}</span>
+          </div>
+        </div>
+
+        <div class="match-card-foot">
+          <div *ngIf="match.penaltyLabel">{{ match.penaltyLabel }}</div>
+          <div *ngIf="match.winnerTeamName">Ganador: <span class="match-pom">{{ match.winnerTeamName }}</span></div>
+          <div *ngIf="match.playerOfMatchName">Figura: <span class="match-pom">{{ match.playerOfMatchName }}</span></div>
+          <div class="match-detail-row">
+            <span *ngIf="match.goalsSummary" class="mini-chip">{{ match.goalsSummary }}</span>
+            <span *ngIf="match.cardsSummary" class="mini-chip">{{ match.cardsSummary }}</span>
+          </div>
+        </div>
+      </button>
+    </section>
+
+    <aside class="match-detail-panel" *ngIf="pageState.selectedMatch as match">
+      <div class="detail-header">
+        <div>
+          <div class="detail-kicker">{{ match.stageLabel }} · {{ match.matchCode }}</div>
+          <h3>{{ match.homeTeamName }} vs {{ match.awayTeamName }}</h3>
+        </div>
+        <div class="detail-score">{{ match.scoreLabel }}</div>
+      </div>
+
+      <div class="detail-meta">
+        <span>{{ match.resolutionLabel }}</span>
+        <span *ngIf="match.penaltyLabel">{{ match.penaltyLabel }}</span>
+        <span *ngIf="match.winnerTeamName">Ganador: {{ match.winnerTeamName }}</span>
+      </div>
+
+      <div class="detail-pom" *ngIf="match.playerOfMatchName">
+        Figura del partido: <strong>{{ match.playerOfMatchName }}</strong>
+      </div>
+
+      <div class="detail-empty" *ngIf="!hasAnyDetail(match)">
+        El partido todavia no tiene eventos registrados.
+      </div>
+
+      <div class="detail-sections" *ngIf="hasAnyDetail(match)">
+        <section class="detail-section">
+          <h4>Goles</h4>
+          <div class="detail-team-block">
+            <strong>{{ match.homeTeamName }}</strong>
+            <p *ngIf="match.homeGoalsDetails.length === 0">Sin goles.</p>
+            <p *ngFor="let goal of match.homeGoalsDetails">{{ getMinuteText(goal) }} {{ goal.playerName }}</p>
+          </div>
+          <div class="detail-team-block">
+            <strong>{{ match.awayTeamName }}</strong>
+            <p *ngIf="match.awayGoalsDetails.length === 0">Sin goles.</p>
+            <p *ngFor="let goal of match.awayGoalsDetails">{{ getMinuteText(goal) }} {{ goal.playerName }}</p>
+          </div>
+        </section>
+
+        <section class="detail-section">
+          <h4>Tarjetas</h4>
+          <div class="detail-team-block">
+            <strong>{{ match.homeTeamName }}</strong>
+            <p *ngIf="match.homeCardsDetails.length === 0">Sin tarjetas.</p>
+            <p *ngFor="let card of match.homeCardsDetails">{{ getMinuteText(card) }} {{ card.playerName }} - {{ card.cardTypeLabel }}</p>
+          </div>
+          <div class="detail-team-block">
+            <strong>{{ match.awayTeamName }}</strong>
+            <p *ngIf="match.awayCardsDetails.length === 0">Sin tarjetas.</p>
+            <p *ngFor="let card of match.awayCardsDetails">{{ getMinuteText(card) }} {{ card.playerName }} - {{ card.cardTypeLabel }}</p>
+          </div>
+        </section>
+
+        <section class="detail-section">
+          <h4>Lesiones</h4>
+          <div class="detail-team-block">
+            <strong>{{ match.homeTeamName }}</strong>
+            <p *ngIf="match.homeInjuriesDetails.length === 0">Sin lesiones.</p>
+            <p *ngFor="let injury of match.homeInjuriesDetails">{{ getMinuteText(injury) }} {{ injury.playerName }}</p>
+          </div>
+          <div class="detail-team-block">
+            <strong>{{ match.awayTeamName }}</strong>
+            <p *ngIf="match.awayInjuriesDetails.length === 0">Sin lesiones.</p>
+            <p *ngFor="let injury of match.awayInjuriesDetails">{{ getMinuteText(injury) }} {{ injury.playerName }}</p>
+          </div>
+        </section>
+
+        <section class="detail-section">
+          <h4>Cambios</h4>
+          <div class="detail-team-block">
+            <strong>{{ match.homeTeamName }}</strong>
+            <p *ngIf="match.homeSubstitutionsDetails.length === 0">Sin cambios.</p>
+            <p *ngFor="let sub of match.homeSubstitutionsDetails">
+              {{ getMinuteText(sub) }} entra {{ sub.playerInName }} / sale {{ sub.playerOutName }}
+            </p>
+          </div>
+          <div class="detail-team-block">
+            <strong>{{ match.awayTeamName }}</strong>
+            <p *ngIf="match.awaySubstitutionsDetails.length === 0">Sin cambios.</p>
+            <p *ngFor="let sub of match.awaySubstitutionsDetails">
+              {{ getMinuteText(sub) }} entra {{ sub.playerInName }} / sale {{ sub.playerOutName }}
+            </p>
+          </div>
+        </section>
+      </div>
+    </aside>
+  </div>
+
+  <div class="empty-state" *ngIf="!pageState.loading && !pageState.errorMessage && pageState.matches.length === 0">
+    <div class="empty-icon">0</div>
+    <p>No hay partidos para el filtro seleccionado.</p>
+  </div>
 </section>

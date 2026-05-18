@@ -9,7 +9,7 @@ import { DocumentBuilder, SwaggerCustomOptions, SwaggerModule } from '@nestjs/sw
 import { ConfigService } from '@nestjs/config';
 import { LogLevel, ValidationPipe } from '@nestjs/common';
 import * as bodyParser from 'body-parser';
-import * as compression from 'compression';
+import compression from 'compression';
 import { SwaggerTheme } from 'swagger-themes';
 import { AppModule } from './app.module';
 import { AllExceptionsFilter } from './basic/all-exceptions.filter';

@@ -7,6 +7,7 @@ import type { GameDictionaryApiResponse, SquadPlayerApiItem } from '../teams/ser
 import type { TeamHistoryApiResponse } from '../teams/services/model/team-history-service.interface';
 import type {
   CurrentWorldCupApiResponse,
+  WorldCupMatchApiItem,
   TeamCatalogApiItem,
   TeamStatsApiResponse,
 } from '../world-cup/services/model/simulation-service.interface';
@@ -61,6 +62,12 @@ export class WorldCupFeatureApiService extends AbstractBaseService {
 
   public async getCurrentWorldCup(lang?: string): Promise<CurrentWorldCupApiResponse> {
     return this.getEndpointData<CurrentWorldCupApiResponse>('/world-cup/current', {
+      lang: this.resolveLang(lang),
+    });
+  }
+
+  public async getCurrentWorldCupMatches(lang?: string): Promise<WorldCupMatchApiItem[]> {
+    return this.getEndpointData<WorldCupMatchApiItem[]>('/world-cup/current/matches', {
       lang: this.resolveLang(lang),
     });
   }

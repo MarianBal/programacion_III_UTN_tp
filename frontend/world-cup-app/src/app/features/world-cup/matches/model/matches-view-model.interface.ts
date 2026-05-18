@@ -11,4 +11,6 @@ export interface MatchesViewModel {
   playedMatches: number;
   pendingMatches: number;
   matches: MatchCardApiItem[];
+  selectedMatchCode: string;
+  selectedMatch: MatchCardApiItem | null;
 }
