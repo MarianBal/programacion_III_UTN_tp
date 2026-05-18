@@ -41,7 +41,7 @@ Entre sus responsabilidades se incluyen:
 - Centralizar consultas técnicas y comunicación con la cátedra.
 - Ayudar a destrabar problemas técnicos dentro del equipo.
 
-**Nombre del Tech Lead:**  [Completar con Nombre]
+**Nombre del Tech Lead:**  Mariana Bálsamo
 
 ### Integrantes por funcionalidad
 
